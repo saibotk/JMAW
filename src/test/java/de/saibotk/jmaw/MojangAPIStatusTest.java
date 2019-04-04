@@ -24,7 +24,7 @@ public class MojangAPIStatusTest extends MojangAPITest {
         mockWebServer.enqueue(new MockResponse().setBody("[{\"minecraft.net\":\"green\"},{\"session.minecraft.net\":\"green\"},{\"account.mojang.com\":\"green\"},{\"authserver.mojang.com\":\"green\"},{\"sessionserver.mojang.com\":\"green\"},{\"api.mojang.com\":\"green\"},{\"textures.minecraft.net\":\"green\"},{\"mojang.com\":\"green\"}]"));
 
         MojangAPI classUnderTest = new MojangAPI();
-        classUnderTest.statusAPI = getRetrofit(mockWebServer).create(MojangApiInterface.class);
+        classUnderTest.statusAPIInterface = getRetrofit(mockWebServer).create(MojangApiInterface.class);
 
         // execute
         MojangAPIStatus mas = classUnderTest.getAPIStatus();
