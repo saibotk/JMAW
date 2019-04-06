@@ -15,8 +15,7 @@ import java.util.Set;
  * @author saibotk
  * @since 1.0
  */
-public class MapAPIStatusTypeAdapter implements JsonDeserializer<APIStatus>
-{
+class MapAPIStatusTypeAdapter implements JsonDeserializer<APIStatus> {
     private Gson gson = new Gson();
 
     /**

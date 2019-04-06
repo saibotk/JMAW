@@ -12,7 +12,7 @@ import java.util.List;
  * @author saibotk
  * @since 1.0
  */
-public interface ApiInterface {
+interface ApiInterface {
 
     @GET("check")
     Call<APIStatus> getMojangAPIStatus();

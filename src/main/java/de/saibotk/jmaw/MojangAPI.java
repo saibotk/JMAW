@@ -86,7 +86,7 @@ public class MojangAPI {
      * @since 1.0
      */
     public APIStatus getAPIStatus() throws ApiResponseException {
-        return request(mojangAPIInterface.getMojangAPIStatus(), MOJANG_API_STATUS_URL);
+        return request(statusAPIInterface.getMojangAPIStatus(), MOJANG_API_STATUS_URL);
     }
 
     /**
