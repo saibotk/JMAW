@@ -1,18 +1,16 @@
 package de.saibotk.jmaw;
 
-import de.saibotk.jmaw.models.MojangAPIUUIDInfo;
-import de.saibotk.jmaw.models.MojangApiInterface;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Tests regarding the {@link MojangAPIUUIDInfo} returned by the {@link MojangAPI#getUUIDInfo(String, long)} method.
+ * Tests regarding the {@link UUIDInfo} returned by the {@link MojangAPI#getUUIDInfo(String, long)} method.
  *
  * @author saibotk
  */
-public class MojangAPIUUIDInfoTest extends MojangAPITest {
+public class UUIDInfoTest extends APITest {
 
     /**
      * Test the correct deserialization by the {@link MojangAPI#getUUIDInfo(String)} method.
@@ -24,10 +22,10 @@ public class MojangAPIUUIDInfoTest extends MojangAPITest {
         mockWebServer.enqueue(new MockResponse().setBody("{\"id\":\"069a79f444e94726a5befca90e38aaf5\",\"name\":\"Notch\"}"));
 
         MojangAPI classUnderTest = new MojangAPI();
-        classUnderTest.mojangAPIInterface = getRetrofit(mockWebServer).create(MojangApiInterface.class);
+        classUnderTest.mojangAPIInterface = getRetrofit(mockWebServer).create(ApiInterface.class);
 
         // execute
-        MojangAPIUUIDInfo info = null;
+        UUIDInfo info = null;
         try {
             info = classUnderTest.getUUIDInfo("Notch");
         } catch (ApiResponseException e) {
@@ -54,7 +52,7 @@ public class MojangAPIUUIDInfoTest extends MojangAPITest {
                 "}").setResponseCode(400));
 
         MojangAPI classUnderTest = new MojangAPI();
-        classUnderTest.mojangAPIInterface = getRetrofit(mockWebServer).create(MojangApiInterface.class);
+        classUnderTest.mojangAPIInterface = getRetrofit(mockWebServer).create(ApiInterface.class);
 
         // execute
         classUnderTest.getUUIDInfo("Notch");

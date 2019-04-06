@@ -1,7 +1,5 @@
 package de.saibotk.jmaw;
 
-import de.saibotk.jmaw.models.MojangAPIUUIDInfo;
-import de.saibotk.jmaw.models.MojangApiInterface;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.Test;
@@ -12,11 +10,11 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Tests regarding the {@link MojangAPIUUIDInfo} returned by the {@link MojangAPI#getUUIDsForUsernames(List)} method.
+ * Tests regarding the {@link UUIDInfo} returned by the {@link MojangAPI#getUUIDsForUsernames(List)} method.
  *
  * @author saibotk
  */
-public class MojangAPIUsernamesToUUIDInfoTest extends MojangAPITest {
+public class UsernamesToUUIDInfoTest extends APITest {
 
     /**
      * Test the correct deserialization by the {@link MojangAPI#getUUIDsForUsernames(List)} method.
@@ -37,14 +35,14 @@ public class MojangAPIUsernamesToUUIDInfoTest extends MojangAPITest {
                 "]"));
 
         MojangAPI classUnderTest = new MojangAPI();
-        classUnderTest.mojangAPIInterface = getRetrofit(mockWebServer).create(MojangApiInterface.class);
+        classUnderTest.mojangAPIInterface = getRetrofit(mockWebServer).create(ApiInterface.class);
 
         // execute
         List<String> usernames = new ArrayList<>();
         usernames.add("Notch");
         usernames.add("Minecraft");
 
-        List<MojangAPIUUIDInfo> info = null;
+        List<UUIDInfo> info = null;
         try {
             info = classUnderTest.getUUIDsForUsernames(usernames);
         } catch (ApiResponseException e) {
@@ -73,7 +71,7 @@ public class MojangAPIUsernamesToUUIDInfoTest extends MojangAPITest {
                 "}").setResponseCode(400));
 
         MojangAPI classUnderTest = new MojangAPI();
-        classUnderTest.mojangAPIInterface = getRetrofit(mockWebServer).create(MojangApiInterface.class);
+        classUnderTest.mojangAPIInterface = getRetrofit(mockWebServer).create(ApiInterface.class);
 
         // execute
         List<String> usernames = new ArrayList<>();

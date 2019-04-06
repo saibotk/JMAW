@@ -1,4 +1,4 @@
-package de.saibotk.jmaw.models;
+package de.saibotk.jmaw;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
  * @author saibotk
  * @since 1.0
  */
-public class MojangAPIUUIDInfo {
+public class UUIDInfo {
 
     @SerializedName("id")
     @Expose

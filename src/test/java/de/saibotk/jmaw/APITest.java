@@ -2,8 +2,6 @@ package de.saibotk.jmaw;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import de.saibotk.jmaw.adapters.MapMojangAPIStatusTypeAdapter;
-import de.saibotk.jmaw.models.MojangAPIStatus;
 import okhttp3.mockwebserver.MockWebServer;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -13,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *
  * @author saibotk
  */
-abstract class MojangAPITest {
+abstract class APITest {
 
     /**
      * Get a mocked {@link Retrofit} instance to be used in tests.
@@ -22,7 +20,7 @@ abstract class MojangAPITest {
      */
     Retrofit getRetrofit(MockWebServer mockWebServer) {
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(MojangAPIStatus.class, new MapMojangAPIStatusTypeAdapter())
+                .registerTypeAdapter(APIStatus.class, new MapAPIStatusTypeAdapter())
                 .create();
 
         return new Retrofit.Builder()

@@ -1,18 +1,16 @@
 package de.saibotk.jmaw;
 
-import de.saibotk.jmaw.models.MojangAPIStatus;
-import de.saibotk.jmaw.models.MojangApiInterface;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Tests regarding the {@link MojangAPIStatus} returned by the {@link MojangAPI#getAPIStatus()} method.
+ * Tests regarding the {@link APIStatus} returned by the {@link MojangAPI#getAPIStatus()} method.
  *
  * @author saibotk
  */
-public class MojangAPIStatusTest extends MojangAPITest {
+public class APIStatusTest extends APITest {
 
     /**
      * Test the correct deserialization by the {@link MojangAPI#getAPIStatus()} method.
@@ -24,10 +22,10 @@ public class MojangAPIStatusTest extends MojangAPITest {
         mockWebServer.enqueue(new MockResponse().setBody("[{\"minecraft.net\":\"green\"},{\"session.minecraft.net\":\"green\"},{\"account.mojang.com\":\"green\"},{\"authserver.mojang.com\":\"green\"},{\"sessionserver.mojang.com\":\"green\"},{\"api.mojang.com\":\"green\"},{\"textures.minecraft.net\":\"green\"},{\"mojang.com\":\"green\"}]"));
 
         MojangAPI classUnderTest = new MojangAPI();
-        classUnderTest.statusAPIInterface = getRetrofit(mockWebServer).create(MojangApiInterface.class);
+        classUnderTest.statusAPIInterface = getRetrofit(mockWebServer).create(ApiInterface.class);
 
         // execute
-        MojangAPIStatus mas = null;
+        APIStatus mas = null;
         try {
             mas = classUnderTest.getAPIStatus();
         } catch (ApiResponseException e) {
@@ -37,7 +35,7 @@ public class MojangAPIStatusTest extends MojangAPITest {
         // expect
         assertNotNull("getAPIStatus() should return an object.", mas);
         assertSame(8, mas.getServices().size());
-        mas.getServices().forEach((name, status) -> assertSame(MojangAPIStatus.MojangAPIStatusCode.GREEN, status));
+        mas.getServices().forEach((name, status) -> assertSame(APIStatus.MojangAPIStatusCode.GREEN, status));
     }
 
 }

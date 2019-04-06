@@ -1,11 +1,5 @@
 package de.saibotk.jmaw;
 
-import de.saibotk.jmaw.adapters.MapMojangAPIStatusTypeAdapter;
-import de.saibotk.jmaw.models.MojangAPIStatus;
-import de.saibotk.jmaw.models.MojangAPIUUIDInfo;
-import de.saibotk.jmaw.models.MojangAPIUsernameItem;
-import de.saibotk.jmaw.models.MojangApiInterface;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -36,18 +30,16 @@ public class MojangAPI {
     private static final String MOJANG_API_STATUS_URL = "https://status.mojang.com";
     private static final String MOJANG_API_URL = "https://api.mojang.com";
 
-    private Gson gson;
-
-    MojangApiInterface statusAPIInterface;
-    MojangApiInterface mojangAPIInterface;
+    ApiInterface statusAPIInterface;
+    ApiInterface mojangAPIInterface;
 
     /**
      * Constructor of the MojangAPI class, that will initialize all internal objects used to make requests and
      * deserialize them.
      */
     public MojangAPI() {
-        gson = new GsonBuilder()
-                .registerTypeAdapter(MojangAPIStatus.class, new MapMojangAPIStatusTypeAdapter())
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(APIStatus.class, new MapAPIStatusTypeAdapter())
                 .create();
 
         Retrofit retrofitStatusAPI = new Retrofit.Builder()
@@ -60,8 +52,8 @@ public class MojangAPI {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        statusAPIInterface = retrofitStatusAPI.create(MojangApiInterface.class);
-        mojangAPIInterface = retrofitMojangAPI.create(MojangApiInterface.class);
+        statusAPIInterface = retrofitStatusAPI.create(ApiInterface.class);
+        mojangAPIInterface = retrofitMojangAPI.create(ApiInterface.class);
     }
 
     private <T> T request(Call<T> callToExecute, String url) throws ApiResponseException {
@@ -87,13 +79,13 @@ public class MojangAPI {
     /**
      * This will query the Mojang API for a response about the status of its services.
      *
-     * @return an instance of {@link MojangAPIStatus} or <code>null</code> if the servers response is empty or
+     * @return an instance of {@link APIStatus} or <code>null</code> if the servers response is empty or
      *         an error occurred while connecting.
      * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
      *                              incorrect or there is an internal server error.
      * @since 1.0
      */
-    public MojangAPIStatus getAPIStatus() throws ApiResponseException {
+    public APIStatus getAPIStatus() throws ApiResponseException {
         return request(mojangAPIInterface.getMojangAPIStatus(), MOJANG_API_STATUS_URL);
     }
 
@@ -101,13 +93,13 @@ public class MojangAPI {
      * This will query the Mojang API for a response about the current UUID of a player by its username.
      *
      * @param username the players username.
-     * @return an instance of {@link MojangAPIUUIDInfo} or <code>null</code> if the servers response is empty or
+     * @return an instance of {@link UUIDInfo} or <code>null</code> if the servers response is empty or
      *         an error occurred while connecting.
      * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
      *                              incorrect or there is an internal server error.
      * @since 1.0
      */
-    public MojangAPIUUIDInfo getUUIDInfo(String username) throws ApiResponseException {
+    public UUIDInfo getUUIDInfo(String username) throws ApiResponseException {
         return request(mojangAPIInterface.getMojangAPIUUIDInfo(username), MOJANG_API_URL);
     }
 
@@ -117,13 +109,13 @@ public class MojangAPI {
      *
      * @param username the players username.
      * @param timestamp the timestamp.
-     * @return an instance of {@link MojangAPIUUIDInfo} or <code>null</code> if the servers response is empty or
+     * @return an instance of {@link UUIDInfo} or <code>null</code> if the servers response is empty or
      *         an error occurred while connecting.
      * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
      *                              incorrect or there is an internal server error.
      * @since 1.0
      */
-    public MojangAPIUUIDInfo getUUIDInfo(String username, long timestamp) throws ApiResponseException {
+    public UUIDInfo getUUIDInfo(String username, long timestamp) throws ApiResponseException {
         return request(mojangAPIInterface.getMojangAPIUUIDInfo(username, timestamp), MOJANG_API_URL);
     }
 
@@ -131,13 +123,13 @@ public class MojangAPI {
      * This will query the Mojang API for a response about the username history for a player by his uuid.
      *
      * @param uuid the unique user id of the player.
-     * @return a {@link List<MojangAPIUsernameItem>} instance or <code>null</code> if the servers response is empty or
+     * @return a {@link List< UsernameItem >} instance or <code>null</code> if the servers response is empty or
      *         an error occured while connecting.
      * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
      *                              incorrect or there is an internal server error.
      * @since 1.0
      */
-    public List<MojangAPIUsernameItem> getUsernameHistory(String uuid) throws ApiResponseException {
+    public List<UsernameItem> getUsernameHistory(String uuid) throws ApiResponseException {
         return request(mojangAPIInterface.getMojangAPIUsernameHistory(uuid), MOJANG_API_URL);
     }
 
@@ -145,24 +137,24 @@ public class MojangAPI {
      * This will query the Mojang API for a response about the username history for a player by his uuid.
      *
      * @param usernames list of usernames to query.
-     * @return a {@link List<MojangAPIUUIDInfo>} instance or <code>null</code> if the servers response is empty or
+     * @return a {@link List< UUIDInfo >} instance or <code>null</code> if the servers response is empty or
      *         an error occured while connecting.
      * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
      *                              incorrect or there is an internal server error.
      * @since 1.0
      */
-    public List<MojangAPIUUIDInfo> getUUIDsForUsernames(List<String> usernames) throws ApiResponseException {
+    public List<UUIDInfo> getUUIDsForUsernames(List<String> usernames) throws ApiResponseException {
 
         int requestsNeeded = usernames.size() / MOJANG_API_USERNAMES_TO_UUIDS_MAX_REQUESTS + 1;
         int sizeToOperateOn = usernames.size();
-        List<MojangAPIUUIDInfo> responseList = new ArrayList<>();
+        List<UUIDInfo> responseList = new ArrayList<>();
 
         for (int i = 0; i < requestsNeeded; i++) {
 
             List<String> usernamesToRequest = usernames.subList(MOJANG_API_USERNAMES_TO_UUIDS_MAX_REQUESTS * i, MOJANG_API_USERNAMES_TO_UUIDS_MAX_REQUESTS * i + Math.min(sizeToOperateOn, MOJANG_API_USERNAMES_TO_UUIDS_MAX_REQUESTS));
 
             // request data
-            List<MojangAPIUUIDInfo> response = request(mojangAPIInterface.getMojangAPIUsernamesToUUIDs(usernamesToRequest), MOJANG_API_URL);
+            List<UUIDInfo> response = request(mojangAPIInterface.getMojangAPIUsernamesToUUIDs(usernamesToRequest), MOJANG_API_URL);
 
             if (response != null && !response.isEmpty()) {
                 responseList.addAll(response);

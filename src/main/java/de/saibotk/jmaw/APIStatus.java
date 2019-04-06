@@ -1,4 +1,4 @@
-package de.saibotk.jmaw.models;
+package de.saibotk.jmaw;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.Map;
  * @author saibotk
  * @since 1.0
  */
-public class MojangAPIStatus {
+public class APIStatus {
 
     /**
      * This is the status code returned by the API as an <code>enum</code>.
