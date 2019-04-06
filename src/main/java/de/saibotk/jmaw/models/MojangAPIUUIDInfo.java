@@ -27,50 +27,6 @@ public class MojangAPIUUIDInfo {
     @Expose
     private boolean legacy;
 
-    @SerializedName("error")
-    @Expose
-    private String error;
-
-    @SerializedName("errorMessage")
-    @Expose
-    private String errorMessage;
-
-    /**
-     * Returns the error string.
-     * @return the error string or null if no error has occurred.
-     * @since 1.0
-     */
-    public String getError() {
-        return error;
-    }
-
-    /**
-     * Sets the error string.
-     * @param error the error string.
-     * @since 1.0
-     */
-    public void setError(String error) {
-        this.error = error;
-    }
-
-    /**
-     * Returns the error message.
-     * @return the error message or null if no error has occurred.
-     * @since 1.0
-     */
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    /**
-     * Sets the error message.
-     * @param errorMessage the error message.
-     * @since 1.0
-     */
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
     /**
      * Returns if the account is a demo account.
      * @return true if it is and false if not.
@@ -82,6 +38,7 @@ public class MojangAPIUUIDInfo {
 
     /**
      * Set if an account is a demo account.
+     * This will not modify anything on the Mojang account / API.
      * @param demo
      * @since 1.0
      */
@@ -100,6 +57,7 @@ public class MojangAPIUUIDInfo {
 
     /**
      * Set if an account is a legacy account.
+     * This will not modify anything on the Mojang account / API.
      * @param legacy
      * @since 1.0
      */
@@ -118,6 +76,7 @@ public class MojangAPIUUIDInfo {
 
     /**
      * Set the UUID.
+     * This will not modify anything on the Mojang account / API.
      * @param id the uuid.
      * @since 1.0
      */
@@ -136,6 +95,7 @@ public class MojangAPIUUIDInfo {
 
     /**
      * Set the username.
+     * This will not modify anything on the Mojang account / API.
      * @param name the username.
      * @since 1.0
      */

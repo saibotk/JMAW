@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Tests regarding the {@link MojangAPIStatus} returned by the {@link MojangAPI}.
+ * Tests regarding the {@link MojangAPIStatus} returned by the {@link MojangAPI#getAPIStatus()} method.
  *
  * @author saibotk
  */
@@ -27,13 +27,17 @@ public class MojangAPIStatusTest extends MojangAPITest {
         classUnderTest.statusAPIInterface = getRetrofit(mockWebServer).create(MojangApiInterface.class);
 
         // execute
-        MojangAPIStatus mas = classUnderTest.getAPIStatus();
+        MojangAPIStatus mas = null;
+        try {
+            mas = classUnderTest.getAPIStatus();
+        } catch (ApiResponseException e) {
+            e.printStackTrace();
+        }
 
         // expect
         assertNotNull("getAPIStatus() should return an object.", mas);
         assertSame(8, mas.getServices().size());
         mas.getServices().forEach((name, status) -> assertSame(MojangAPIStatus.MojangAPIStatusCode.GREEN, status));
     }
-
 
 }

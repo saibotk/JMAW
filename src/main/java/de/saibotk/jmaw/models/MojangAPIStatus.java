@@ -31,6 +31,7 @@ public class MojangAPIStatus {
 
     /**
      * Sets the services map for this instance.
+     * This will not modify anything on the Mojang account / API.
      * @param services the {@link Map} containing the services names and their corresponding status
      * @since 1.0
      */
