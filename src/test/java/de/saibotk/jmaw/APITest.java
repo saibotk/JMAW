@@ -1,7 +1,5 @@
 package de.saibotk.jmaw;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import okhttp3.mockwebserver.MockWebServer;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -19,13 +17,9 @@ abstract class APITest {
      * @return a new Retrofit instance.
      */
     Retrofit getRetrofit(MockWebServer mockWebServer) {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(APIStatus.class, new MapAPIStatusTypeAdapter())
-                .create();
-
         return new Retrofit.Builder()
                 .baseUrl(mockWebServer.url("").toString())
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create(Util.getGson()))
                 .build();
     }
 }

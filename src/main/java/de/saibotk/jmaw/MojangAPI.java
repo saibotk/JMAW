@@ -1,7 +1,6 @@
 package de.saibotk.jmaw;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -29,18 +28,18 @@ public class MojangAPI {
 
     private static final String MOJANG_API_STATUS_URL = "https://status.mojang.com";
     private static final String MOJANG_API_URL = "https://api.mojang.com";
+    private static final String MOJANG_API_SESSION_URL = "https://sessionserver.mojang.com";
 
     ApiInterface statusAPIInterface;
     ApiInterface mojangAPIInterface;
+    ApiInterface sessionAPIInterface;
 
     /**
      * Constructor of the MojangAPI class, that will initialize all internal objects used to make requests and
      * deserialize them.
      */
     public MojangAPI() {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(APIStatus.class, new MapAPIStatusTypeAdapter())
-                .create();
+        Gson gson = Util.getGson();
 
         Retrofit retrofitStatusAPI = new Retrofit.Builder()
                 .baseUrl(MOJANG_API_STATUS_URL)
@@ -52,8 +51,14 @@ public class MojangAPI {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
+        Retrofit retrofitSessionAPI = new Retrofit.Builder()
+                .baseUrl(MOJANG_API_SESSION_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
         statusAPIInterface = retrofitStatusAPI.create(ApiInterface.class);
         mojangAPIInterface = retrofitMojangAPI.create(ApiInterface.class);
+        sessionAPIInterface = retrofitSessionAPI.create(ApiInterface.class);
     }
 
     private <T> T request(Call<T> callToExecute, String url) throws ApiResponseException {
@@ -86,7 +91,7 @@ public class MojangAPI {
      * @since 1.0
      */
     public APIStatus getAPIStatus() throws ApiResponseException {
-        return request(statusAPIInterface.getMojangAPIStatus(), MOJANG_API_STATUS_URL);
+        return request(statusAPIInterface.getApiStatus(), MOJANG_API_STATUS_URL);
     }
 
     /**
@@ -100,7 +105,7 @@ public class MojangAPI {
      * @since 1.0
      */
     public UUIDInfo getUUIDInfo(String username) throws ApiResponseException {
-        return request(mojangAPIInterface.getMojangAPIUUIDInfo(username), MOJANG_API_URL);
+        return request(mojangAPIInterface.getUUIDInfo(username), MOJANG_API_URL);
     }
 
     /**
@@ -116,7 +121,7 @@ public class MojangAPI {
      * @since 1.0
      */
     public UUIDInfo getUUIDInfo(String username, long timestamp) throws ApiResponseException {
-        return request(mojangAPIInterface.getMojangAPIUUIDInfo(username, timestamp), MOJANG_API_URL);
+        return request(mojangAPIInterface.getUUIDInfo(username, timestamp), MOJANG_API_URL);
     }
 
     /**
@@ -124,13 +129,13 @@ public class MojangAPI {
      *
      * @param uuid the unique user id of the player.
      * @return a {@link List< UsernameItem >} instance or <code>null</code> if the servers response is empty or
-     *         an error occured while connecting.
+     *         an error occurred while connecting.
      * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
      *                              incorrect or there is an internal server error.
      * @since 1.0
      */
     public List<UsernameItem> getUsernameHistory(String uuid) throws ApiResponseException {
-        return request(mojangAPIInterface.getMojangAPIUsernameHistory(uuid), MOJANG_API_URL);
+        return request(mojangAPIInterface.getUsernameHistory(uuid), MOJANG_API_URL);
     }
 
     /**
@@ -138,7 +143,7 @@ public class MojangAPI {
      *
      * @param usernames list of usernames to query.
      * @return a {@link List< UUIDInfo >} instance or <code>null</code> if the servers response is empty or
-     *         an error occured while connecting.
+     *         an error occurred while connecting.
      * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
      *                              incorrect or there is an internal server error.
      * @since 1.0
@@ -154,7 +159,7 @@ public class MojangAPI {
             List<String> usernamesToRequest = usernames.subList(MOJANG_API_USERNAMES_TO_UUIDS_MAX_REQUESTS * i, MOJANG_API_USERNAMES_TO_UUIDS_MAX_REQUESTS * i + Math.min(sizeToOperateOn, MOJANG_API_USERNAMES_TO_UUIDS_MAX_REQUESTS));
 
             // request data
-            List<UUIDInfo> response = request(mojangAPIInterface.getMojangAPIUsernamesToUUIDs(usernamesToRequest), MOJANG_API_URL);
+            List<UUIDInfo> response = request(mojangAPIInterface.getUsernamesToUUIDs(usernamesToRequest), MOJANG_API_URL);
 
             if (response != null && !response.isEmpty()) {
                 responseList.addAll(response);
@@ -164,6 +169,39 @@ public class MojangAPI {
         }
 
         return (!responseList.isEmpty()) ? responseList : null;
+    }
+
+    /**
+     * This will query the Mojang API for a response about the informations (eg. skin etc) of a specific player by his
+     * uuid.
+     * This response will be unsigned.
+     *
+     * @param uuid the unique user id of the player.
+     * @return an instance of {@link PlayerProfile} or <code>null</code> if the servers response is empty or
+     *         an error occurred while connecting.
+     * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
+     *                              incorrect or there is an internal server error.
+     * @since 1.0
+     */
+    public PlayerProfile getPlayerProfile(String uuid) throws ApiResponseException {
+        return request(sessionAPIInterface.getPlayerProfile(uuid, true), MOJANG_API_SESSION_URL);
+    }
+
+    /**
+     * This will query the Mojang API for a response about the informations (eg. skin etc) of a specific player by his
+     * uuid.
+     * This response will contain a signature by the server.
+     *
+     * @param uuid the unique user id of the player.
+     * @param signed if the request should be signed by the server.
+     * @return an instance of {@link PlayerProfile} or <code>null</code> if the servers response is empty or
+     *         an error occurred while connecting.
+     * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
+     *                              incorrect or there is an internal server error.
+     * @since 1.0
+     */
+    public PlayerProfile getPlayerProfile(String uuid, boolean signed) throws ApiResponseException {
+        return request(sessionAPIInterface.getPlayerProfile(uuid, !signed), MOJANG_API_SESSION_URL);
     }
 
 }

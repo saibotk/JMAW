@@ -15,18 +15,22 @@ import java.util.List;
 interface ApiInterface {
 
     @GET("check")
-    Call<APIStatus> getMojangAPIStatus();
+    Call<APIStatus> getApiStatus();
 
     @GET("users/profiles/minecraft/{username}")
-    Call<UUIDInfo> getMojangAPIUUIDInfo(@Path("username") String username);
+    Call<UUIDInfo> getUUIDInfo(@Path("username") String username);
 
     @GET("users/profiles/minecraft/{username}")
-    Call<UUIDInfo> getMojangAPIUUIDInfo(@Path("username") String username, @Query("at") long timestamp );
+    Call<UUIDInfo> getUUIDInfo(@Path("username") String username, @Query("at") long timestamp );
 
     @GET("user/profiles/{uuid}/names")
-    Call<List<UsernameItem>> getMojangAPIUsernameHistory(@Path("uuid") String uuid);
+    Call<List<UsernameItem>> getUsernameHistory(@Path("uuid") String uuid);
 
     @POST("profiles/minecraft")
     @Headers("Content-Type: application/json")
-    Call<List<UUIDInfo>> getMojangAPIUsernamesToUUIDs(@Body List<String> usernames);
+    Call<List<UUIDInfo>> getUsernamesToUUIDs(@Body List<String> usernames);
+
+    @GET("session/minecraft/profile/{uuid}")
+    Call<PlayerProfile> getPlayerProfile(@Path("uuid") String uuid, @Query("unsigned") boolean unsigned);
+
  }
