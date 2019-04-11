@@ -24,6 +24,7 @@ class Util {
 
         return new GsonBuilder()
                 .registerTypeAdapter(PlayerTexturesProperty.class, new PlayerTexturesPropertyDeserializer())
+                .registerTypeAdapter(SkinMetadata.class, new SkinMetadataTypeAdapter())
                 .registerTypeAdapter(APIStatus.class, new APIStatusDeserializer())
                 .registerTypeAdapterFactory(playerPropertyAdapterFactory)
                 .create();

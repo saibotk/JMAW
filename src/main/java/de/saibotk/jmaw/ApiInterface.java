@@ -1,5 +1,8 @@
 package de.saibotk.jmaw;
 
+import com.google.gson.JsonObject;
+import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -33,4 +36,20 @@ interface ApiInterface {
     @GET("session/minecraft/profile/{uuid}")
     Call<PlayerProfile> getPlayerProfile(@Path("uuid") String uuid, @Query("unsigned") boolean unsigned);
 
+    @POST("user/profile/{uuid}/skin")
+    @FormUrlEncoded
+    Call<ResponseBody> setSkin(@Path("uuid") String uuid, @Header("Authorization") String token, @Field("url") String url, @Field("model") String model);
+
+    @PUT("user/profile/{uuid}/skin")
+    @Multipart
+    Call<ResponseBody> uploadSkin(@Path("uuid") String uuid, @Header("Authorization") String token, @Part MultipartBody.Part file, @Part("model") String model);
+
+    @DELETE("user/profile/{uuid}/skin")
+    Call<ResponseBody> deleteSkin(@Path("uuid") String uuid, @Header("Authorization") String token);
+
+    @GET("blockedservers")
+    Call<List<String>> getBlockedServers();
+
+    @POST("orders/statistics")
+    Call<SaleStatistics> getStatistics(@Body JsonObject metricKeys);
  }

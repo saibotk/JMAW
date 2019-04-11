@@ -12,27 +12,42 @@ import com.google.gson.annotations.SerializedName;
  * @since 1.0
  */
 public class SkinMetadata {
+    public enum SkinModel {
+        @SerializedName("") DEFAULT(""),
+        @SerializedName("slim") SLIM ("slim");
+
+        private final String usage;
+
+        SkinModel(String usage) {
+            this.usage = usage;
+        }
+
+        @Override
+        public String toString() {
+            return this.usage;
+        }
+    }
 
     @SerializedName("model")
     @Expose
-    private String model;
+    private SkinModel model;
 
     /**
-     * Returns the model string. Mostly just "slim" otherwise not set and is interpreted as Steve's style.
-     * @return the model string.
+     * Returns the model. Mostly just "slim" otherwise it is interpreted as Steve's style.
+     * @return the model.
      * @since 1.0
      */
-    public String getModel() {
+    public SkinModel getModel() {
         return model;
     }
 
     /**
-     * Sets the model string.
+     * Sets the model.
      * This will not modify anything on the Mojang account / API.
      * @param model the model that is used.
      * @since 1.0
      */
-    public void setModel(String model) {
+    public void setModel(SkinModel model) {
         this.model = model;
     }
 }

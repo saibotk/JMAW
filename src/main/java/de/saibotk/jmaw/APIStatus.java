@@ -38,4 +38,14 @@ public class APIStatus {
     public void setServices(Map<String, MojangAPIStatusCode> services) {
         this.services = services;
     }
+
+    /**
+     * Simple helper which calls {@link Map#getOrDefault(Object, Object)} on the internal services list.
+     * @param serviceName the service.
+     * @return the status for the service or null if the service was not found.
+     * @since 1.0
+     */
+    public MojangAPIStatusCode get(String serviceName) {
+        return services.getOrDefault(serviceName, null);
+    }
 }

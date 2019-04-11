@@ -25,7 +25,7 @@ public class PlayerTextures {
      * @return an instance of {@link PlayerSkinTexture}.
      * @since 1.0
      */
-    public PlayerSkinTexture getSKIN() {
+    public PlayerSkinTexture getSkin() {
         return skin;
     }
 
@@ -44,7 +44,7 @@ public class PlayerTextures {
      * @return an instance of {@link PlayerCapeTexture}.
      * @since 1.0
      */
-    public PlayerCapeTexture getCAPE() {
+    public PlayerCapeTexture getCape() {
         return cape;
     }
 

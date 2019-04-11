@@ -43,10 +43,10 @@ public class PlayerProfileTest extends APITest {
         PlayerTexturesProperty ptp = (PlayerTexturesProperty) textures;
         assertNull(ptp.getSignature());
         assertNotNull(ptp.getTextures());
-        assertNotNull(ptp.getTextures().getSKIN());
-        assertEquals("http://textures.minecraft.net/texture/74d1e08b0bb7e9f590af27758125bbed1778ac6cef729aedfcb9613e9911ae75", ptp.getTextures().getSKIN().getUrl());
-        assertNotNull(ptp.getTextures().getCAPE());
-        assertEquals("http://textures.minecraft.net/texture/b0cc08840700447322d953a02b965f1d65a13a603bf64b17c803c21446fe1635", ptp.getTextures().getCAPE().getUrl());
+        assertNotNull(ptp.getTextures().getSkin());
+        assertEquals("http://textures.minecraft.net/texture/74d1e08b0bb7e9f590af27758125bbed1778ac6cef729aedfcb9613e9911ae75", ptp.getTextures().getSkin().getUrl());
+        assertNotNull(ptp.getTextures().getCape());
+        assertEquals("http://textures.minecraft.net/texture/b0cc08840700447322d953a02b965f1d65a13a603bf64b17c803c21446fe1635", ptp.getTextures().getCape().getUrl());
         assertEquals((Long) 1554642133848L, ptp.getTimestamp());
         assertFalse(ptp.getSignatureRequired());
     }
@@ -84,10 +84,10 @@ public class PlayerProfileTest extends APITest {
         PlayerTexturesProperty ptp = (PlayerTexturesProperty) textures;
         assertNull(ptp.getSignature());
         assertNotNull(ptp.getTextures());
-        assertNotNull(ptp.getTextures().getSKIN());
-        assertEquals("http://textures.minecraft.net/texture/74d1e08b0bb7e9f590af27758125bbed1778ac6cef729aedfcb9613e9911ae75", ptp.getTextures().getSKIN().getUrl());
-        assertNotNull(ptp.getTextures().getCAPE());
-        assertEquals("http://textures.minecraft.net/texture/b0cc08840700447322d953a02b965f1d65a13a603bf64b17c803c21446fe1635", ptp.getTextures().getCAPE().getUrl());
+        assertNotNull(ptp.getTextures().getSkin());
+        assertEquals("http://textures.minecraft.net/texture/74d1e08b0bb7e9f590af27758125bbed1778ac6cef729aedfcb9613e9911ae75", ptp.getTextures().getSkin().getUrl());
+        assertNotNull(ptp.getTextures().getCape());
+        assertEquals("http://textures.minecraft.net/texture/b0cc08840700447322d953a02b965f1d65a13a603bf64b17c803c21446fe1635", ptp.getTextures().getCape().getUrl());
         assertEquals((Long) 1554642133848L, ptp.getTimestamp());
         assertFalse(ptp.getSignatureRequired());
         PlayerProperty pp2 = pp.getProperties().get(1);
