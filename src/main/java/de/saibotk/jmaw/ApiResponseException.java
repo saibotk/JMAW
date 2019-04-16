@@ -14,14 +14,14 @@ import java.io.IOException;
  */
 public class ApiResponseException extends IOException {
 
-    public final Response response;
+    public final transient Response response;
 
     /**
      * The ApiResponseException constructor will set the error message and the response associated with the exception.
      * @param response the response associated to the exception.
      * @since 1.0
      */
-    public ApiResponseException(Response response) {
+    ApiResponseException(Response response) {
         super(response.code() + ": [" + response.message() + "]");
         this.response = response;
     }

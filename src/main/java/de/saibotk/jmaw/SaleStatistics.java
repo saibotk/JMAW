@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * This models the response by {@link MojangAPI#getSaleStatistics()}.
+ * This models the response by {@link MojangAPI#getSaleStatistics(java.util.List)}.
  *
  * @author saibotk
  * @since 1.0

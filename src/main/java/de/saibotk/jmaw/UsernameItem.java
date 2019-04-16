@@ -16,6 +16,7 @@ public class UsernameItem {
     @SerializedName("name")
     @Expose
     private String name;
+
     @SerializedName("changedToAt")
     @Expose
     private Long changedToAt;

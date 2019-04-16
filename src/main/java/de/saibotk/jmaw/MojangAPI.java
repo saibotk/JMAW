@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
  * @author saibotk
  * @since 1.0
  */
+@SuppressWarnings("WeakerAccess")
 public class MojangAPI {
 
 
@@ -198,7 +199,7 @@ public class MojangAPI {
     /**
      * This will query the Mojang API for a response about the informations (eg. skin etc) of a specific player by his
      * uuid.
-     * This response will contain a signature by the server.
+     * This response will contain a signature by the server, if requested.
      *
      * @param uuid the unique user id of the player.
      * @param signed if the request should be signed by the server.
@@ -212,23 +213,70 @@ public class MojangAPI {
         return request(sessionAPIInterface.getPlayerProfile(uuid, !signed), MOJANG_API_SESSION_URL);
     }
 
+    /**
+     * This will query the Mojang API for a change of the players skin, by sending a url to the skin file.
+     *
+     * @param uuid the unique user id of the player.
+     * @param token the api token.
+     * @param url the link to the new skin.
+     * @param model the model type of the new skin.
+     * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
+     *                              incorrect or there is an internal server error.
+     * @since 1.0
+     */
     public void changeSkin(String uuid, String token, String url, SkinMetadata.SkinModel model) throws ApiResponseException {
         request(mojangAPIInterface.setSkin(uuid, token, url, model.toString()), MOJANG_API_URL);
     }
 
+    /**
+     * This will query the Mojang API for a change of the players skin, by sending the skin file.
+     *
+     * @param uuid the unique user id of the player.
+     * @param token the api token.
+     * @param skin the new skin file.
+     * @param model the model type of the new skin.
+     * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
+     *                              incorrect or there is an internal server error.
+     * @since 1.0
+     */
     public void uploadSkin(String uuid, String token, File skin, SkinMetadata.SkinModel model) throws ApiResponseException {
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", skin.getName(), RequestBody.create(MediaType.parse("image/*"), skin));
         request(mojangAPIInterface.uploadSkin(uuid, token, filePart, model.toString()), MOJANG_API_URL);
     }
 
+    /**
+     * This will query the Mojang API to delete the players skin.
+     *
+     * @param uuid the unique user id of the player.
+     * @param token the api token.
+     * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
+     *                              incorrect or there is an internal server error.
+     * @since 1.0
+     */
     public void deleteSkin(String uuid, String token) throws ApiResponseException {
         request(mojangAPIInterface.deleteSkin(uuid, token), MOJANG_API_URL);
     }
 
+    /**
+     * This will query the Mojang API for a list of blocked servers.
+     *
+     * @return {@link List<String>} list with all blocked servers hashes.
+     * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
+     *                              incorrect or there is an internal server error.
+     * @since 1.0
+     */
     public List<String> getBlockedServers() throws ApiResponseException {
         return request(sessionAPIInterface.getBlockedServers(), MOJANG_API_SESSION_URL);
     }
 
+    /**
+     * This will query the Mojang API for informations about the sales for specific products.
+     *
+     * @return {@link SaleStatistics} instance.
+     * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
+     *                              incorrect or there is an internal server error.
+     * @since 1.0
+     */
     public SaleStatistics getSaleStatistics(List<SaleStatistics.MetricKeys> keys) throws ApiResponseException {
         List<String> distinctKeys = keys.stream().distinct().map(k -> k.name().toLowerCase()).collect(Collectors.toList());
         JsonObject metrics = new JsonObject();

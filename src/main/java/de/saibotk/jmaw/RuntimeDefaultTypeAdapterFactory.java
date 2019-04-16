@@ -124,7 +124,7 @@ import com.google.gson.stream.JsonWriter;
  * }</pre>
  * @author saibotk
  */
-public final class RuntimeDefaultTypeAdapterFactory<T> implements TypeAdapterFactory {
+final class RuntimeDefaultTypeAdapterFactory<T> implements TypeAdapterFactory {
     private final Class<?> baseType;
     private final String typeFieldName;
     private final Map<String, Class<?>> labelToSubtype = new LinkedHashMap<>();
@@ -146,7 +146,7 @@ public final class RuntimeDefaultTypeAdapterFactory<T> implements TypeAdapterFac
      * typeFieldName} as the type field name. Type field names are case sensitive.
      * {@code maintainType} flag decide if the type will be stored in pojo or not.
      */
-    public static <T> RuntimeDefaultTypeAdapterFactory<T> of(Class<T> baseType, String typeFieldName, boolean maintainType) {
+    static <T> RuntimeDefaultTypeAdapterFactory<T> of(Class<T> baseType, String typeFieldName, boolean maintainType) {
         return new RuntimeDefaultTypeAdapterFactory<>(baseType, typeFieldName, maintainType);
     }
 
@@ -154,7 +154,7 @@ public final class RuntimeDefaultTypeAdapterFactory<T> implements TypeAdapterFac
      * Creates a new runtime type adapter using for {@code baseType} using {@code
      * typeFieldName} as the type field name. Type field names are case sensitive.
      */
-    public static <T> RuntimeDefaultTypeAdapterFactory<T> of(Class<T> baseType, String typeFieldName) {
+    static <T> RuntimeDefaultTypeAdapterFactory<T> of(Class<T> baseType, String typeFieldName) {
         return new RuntimeDefaultTypeAdapterFactory<>(baseType, typeFieldName, false);
     }
 
@@ -162,7 +162,7 @@ public final class RuntimeDefaultTypeAdapterFactory<T> implements TypeAdapterFac
      * Creates a new runtime type adapter for {@code baseType} using {@code "type"} as
      * the type field name.
      */
-    public static <T> RuntimeDefaultTypeAdapterFactory<T> of(Class<T> baseType) {
+    static <T> RuntimeDefaultTypeAdapterFactory<T> of(Class<T> baseType) {
         return new RuntimeDefaultTypeAdapterFactory<>(baseType,"type", false);
     }
 
@@ -173,7 +173,7 @@ public final class RuntimeDefaultTypeAdapterFactory<T> implements TypeAdapterFac
      * @throws IllegalArgumentException if either {@code type} or {@code label}
      *     have already been registered on this type adapter.
      */
-    public RuntimeDefaultTypeAdapterFactory<T> registerSubtype(Class<? extends T> type, String label) {
+    RuntimeDefaultTypeAdapterFactory<T> registerSubtype(Class<? extends T> type, String label) {
         if (type == null || label == null) {
             throw new NullPointerException();
         }
@@ -192,7 +192,7 @@ public final class RuntimeDefaultTypeAdapterFactory<T> implements TypeAdapterFac
      * @throws IllegalArgumentException if either {@code type} or its simple name
      *     have already been registered on this type adapter.
      */
-    public RuntimeDefaultTypeAdapterFactory<T> registerSubtype(Class<? extends T> type) {
+    RuntimeDefaultTypeAdapterFactory<T> registerSubtype(Class<? extends T> type) {
         return registerSubtype(type, type.getSimpleName());
     }
 

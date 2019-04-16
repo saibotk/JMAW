@@ -12,6 +12,7 @@ import java.lang.reflect.Type;
  */
 class SkinMetadataTypeAdapter implements JsonDeserializer<SkinMetadata>, JsonSerializer<SkinMetadata> {
     private Gson gson = new Gson();
+    private static final String MODEL_IDENTIFIER = "model";
 
     /**
      * This will deserialize the given JSON to an instance of {@link SkinMetadata}.
@@ -23,7 +24,7 @@ class SkinMetadataTypeAdapter implements JsonDeserializer<SkinMetadata>, JsonSer
     {
         JsonObject jsonObj = element.getAsJsonObject();
         SkinMetadata sm = new SkinMetadata();
-        if (jsonObj.has("model") && gson.fromJson(jsonObj.get("model"), String.class).equals("slim")) {
+        if (jsonObj.has(MODEL_IDENTIFIER) && gson.fromJson(jsonObj.get(MODEL_IDENTIFIER), String.class).equals("slim")) {
             sm.setModel(SkinMetadata.SkinModel.SLIM);
         } else {
             sm.setModel(SkinMetadata.SkinModel.DEFAULT);
@@ -41,9 +42,9 @@ class SkinMetadataTypeAdapter implements JsonDeserializer<SkinMetadata>, JsonSer
     public JsonElement serialize(SkinMetadata src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject jo = new JsonObject();
         if(src.getModel() == SkinMetadata.SkinModel.SLIM) {
-            jo.addProperty("model", "slim");
+            jo.addProperty(MODEL_IDENTIFIER, "slim");
         } else {
-            jo.addProperty("model", "");
+            jo.addProperty(MODEL_IDENTIFIER, "");
         }
         return jo;
     }
