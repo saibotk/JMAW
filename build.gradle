@@ -19,3 +19,13 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.9.1'
 }
+
+task copyJavaDocFolder(type: Copy, group: 'help') {
+    mustRunAfter javadoc
+    from project.file(docsDir.getPath() + "/javadoc")
+    into project.file("docs")
+}
+
+task generateAndPublishJavaDoc(group: 'documentation') {
+    dependsOn javadoc, copyJavaDocFolder
+}
