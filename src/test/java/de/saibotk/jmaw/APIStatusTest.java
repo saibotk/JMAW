@@ -38,4 +38,32 @@ public class APIStatusTest extends APITest {
         mas.getServices().forEach((name, status) -> assertSame(APIStatus.MojangAPIStatusCode.GREEN, status));
     }
 
+    /**
+     * Test the correct deserialization by the {@link MojangAPI#getAPIStatus()} method.
+     * This test will use valid data and expects a normal result.
+     */
+    @Test public void testAPIStatusResponseDeserialization2() {
+        // before
+        MockWebServer mockWebServer = new MockWebServer();
+        mockWebServer.enqueue(new MockResponse().setBody("[{\"minecraft.net\":\"yellow\"},{\"session.minecraft.net\":\"red\"},{\"account.mojang.com\":\"green\"}]"));
+
+        MojangAPI classUnderTest = new MojangAPI();
+        classUnderTest.statusAPIInterface = getRetrofit(mockWebServer).create(ApiInterface.class);
+
+        // execute
+        APIStatus mas = null;
+        try {
+            mas = classUnderTest.getAPIStatus();
+        } catch (ApiResponseException e) {
+            e.printStackTrace();
+        }
+
+        // expect
+        assertNotNull("getAPIStatus() should return an object.", mas);
+        assertSame(3, mas.getServices().size());
+        assertEquals(APIStatus.MojangAPIStatusCode.YELLOW, mas.get("minecraft.net"));
+        assertEquals(APIStatus.MojangAPIStatusCode.RED, mas.get("session.minecraft.net"));
+        assertEquals(APIStatus.MojangAPIStatusCode.GREEN, mas.get("account.mojang.com"));
+    }
+
 }

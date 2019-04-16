@@ -1,7 +1,5 @@
 package de.saibotk.jmaw;
 
-import com.google.gson.Gson;
-
 import com.google.gson.JsonObject;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -9,7 +7,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,32 +39,33 @@ public class MojangAPI {
     ApiInterface statusAPIInterface;
     ApiInterface mojangAPIInterface;
     ApiInterface sessionAPIInterface;
+    ApiInterface sessionAPILineReadInterface;
 
     /**
      * Constructor of the MojangAPI class, that will initialize all internal objects used to make requests and
      * deserialize them.
      */
     public MojangAPI() {
-        Gson gson = Util.getGson();
-
-        Retrofit retrofitStatusAPI = new Retrofit.Builder()
+        Retrofit retrofitStatusAPI = Util.getRetrofitBuilder()
                 .baseUrl(MOJANG_API_STATUS_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        Retrofit retrofitMojangAPI = new Retrofit.Builder()
+        Retrofit retrofitMojangAPI = Util.getRetrofitBuilder()
                 .baseUrl(MOJANG_API_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        Retrofit retrofitSessionAPI = new Retrofit.Builder()
+        Retrofit retrofitSessionAPI = Util.getRetrofitBuilder()
                 .baseUrl(MOJANG_API_SESSION_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        Retrofit retrofitLineReadSessionAPI = Util.getStringLineRetrofitBuilder()
+                .baseUrl(MOJANG_API_SESSION_URL)
                 .build();
 
         statusAPIInterface = retrofitStatusAPI.create(ApiInterface.class);
         mojangAPIInterface = retrofitMojangAPI.create(ApiInterface.class);
         sessionAPIInterface = retrofitSessionAPI.create(ApiInterface.class);
+        sessionAPILineReadInterface = retrofitLineReadSessionAPI.create(ApiInterface.class);
     }
 
     private <T> T request(Call<T> callToExecute, String url) throws ApiResponseException {
@@ -266,7 +264,7 @@ public class MojangAPI {
      * @since 1.0
      */
     public List<String> getBlockedServers() throws ApiResponseException {
-        return request(sessionAPIInterface.getBlockedServers(), MOJANG_API_SESSION_URL);
+        return request(sessionAPILineReadInterface.getBlockedServers(), MOJANG_API_SESSION_URL);
     }
 
     /**

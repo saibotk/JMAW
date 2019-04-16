@@ -60,7 +60,7 @@ public class PlayerProfileTest extends APITest {
     @Test public void testPlayerProfileResponseDeserialization2() {
         // before
         MockWebServer mockWebServer = new MockWebServer();
-        mockWebServer.enqueue(new MockResponse().setBody("{\"id\":\"4566e69fc90748ee8d71d7ba5aa00d20\",\"name\":\"Thinkofdeath\",\"properties\":[{\"name\":\"textures\",\"value\":\"eyJ0aW1lc3RhbXAiOjE1NTQ2NDIxMzM4NDgsInByb2ZpbGVJZCI6IjQ1NjZlNjlmYzkwNzQ4ZWU4ZDcxZDdiYTVhYTAwZDIwIiwicHJvZmlsZU5hbWUiOiJUaGlua29mZGVhdGgiLCJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzRkMWUwOGIwYmI3ZTlmNTkwYWYyNzc1ODEyNWJiZWQxNzc4YWM2Y2VmNzI5YWVkZmNiOTYxM2U5OTExYWU3NSJ9LCJDQVBFIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjBjYzA4ODQwNzAwNDQ3MzIyZDk1M2EwMmI5NjVmMWQ2NWExM2E2MDNiZjY0YjE3YzgwM2MyMTQ0NmZlMTYzNSJ9fX0=\"},{\"name\":\"test\",\"value\":\"testdata\"}]}"));
+        mockWebServer.enqueue(new MockResponse().setBody("{\"id\":\"c9b54008fd8047428b238787b5f2401c\",\"name\":\"MinecraftChick\",\"properties\":[{\"name\":\"textures\",\"value\":\"eyJ0aW1lc3RhbXAiOjE1NTU0MzM4MjA1MzcsInByb2ZpbGVJZCI6ImM5YjU0MDA4ZmQ4MDQ3NDI4YjIzODc4N2I1ZjI0MDFjIiwicHJvZmlsZU5hbWUiOiJNaW5lY3JhZnRDaGljayIsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9kODJlMGYwNzIyYjgwNjg5NTY4ODI4NGMzMTY2NTg1ZjdiYjliZmZjNzE4ZTZmN2Y0YmRjYzczYzJiMjNhZmUwIiwibWV0YWRhdGEiOnsibW9kZWwiOiJzbGltIn19fX0=\"}]}"));
 
         MojangAPI classUnderTest = new MojangAPI();
         classUnderTest.sessionAPIInterface = getRetrofit(mockWebServer).create(ApiInterface.class);
@@ -68,33 +68,29 @@ public class PlayerProfileTest extends APITest {
         // execute
         PlayerProfile pp = null;
         try {
-            pp = classUnderTest.getPlayerProfile("4566e69fc90748ee8d71d7ba5aa00d20");
+            pp = classUnderTest.getPlayerProfile("c9b54008fd8047428b238787b5f2401c");
         } catch (ApiResponseException e) {
             e.printStackTrace();
         }
 
         // expect
         assertNotNull(pp);
-        assertEquals("4566e69fc90748ee8d71d7ba5aa00d20", pp.getId());
-        assertEquals("Thinkofdeath", pp.getName());
+        assertEquals("c9b54008fd8047428b238787b5f2401c", pp.getId());
+        assertEquals("MinecraftChick", pp.getName());
         assertNotNull(pp.getProperties());
-        assertEquals(2, pp.getProperties().size());
+        assertEquals(1, pp.getProperties().size());
         PlayerProperty textures = pp.getProperties().get(0);
         assertTrue(textures instanceof PlayerTexturesProperty);
         PlayerTexturesProperty ptp = (PlayerTexturesProperty) textures;
         assertNull(ptp.getSignature());
         assertNotNull(ptp.getTextures());
         assertNotNull(ptp.getTextures().getSkin());
-        assertEquals("http://textures.minecraft.net/texture/74d1e08b0bb7e9f590af27758125bbed1778ac6cef729aedfcb9613e9911ae75", ptp.getTextures().getSkin().getUrl());
-        assertNotNull(ptp.getTextures().getCape());
-        assertEquals("http://textures.minecraft.net/texture/b0cc08840700447322d953a02b965f1d65a13a603bf64b17c803c21446fe1635", ptp.getTextures().getCape().getUrl());
-        assertEquals((Long) 1554642133848L, ptp.getTimestamp());
+        assertEquals("http://textures.minecraft.net/texture/d82e0f0722b806895688284c3166585f7bb9bffc718e6f7f4bdcc73c2b23afe0", ptp.getTextures().getSkin().getUrl());
+        assertNull(ptp.getTextures().getCape());
+        assertEquals((Long) 1555433820537L, ptp.getTimestamp());
+        assertNotNull(ptp.getTextures().getSkin().getMetadata());
+        assertEquals(SkinMetadata.SkinModel.SLIM, ptp.getTextures().getSkin().getMetadata().getModel());
         assertFalse(ptp.getSignatureRequired());
-        PlayerProperty pp2 = pp.getProperties().get(1);
-        assertFalse(pp2 instanceof PlayerTexturesProperty);
-        assertNull(pp2.getSignature());
-        assertEquals("test", pp2.getName());
-        assertEquals("testdata", pp2.getRawValue());
     }
 
     /**
@@ -135,6 +131,39 @@ public class PlayerProfileTest extends APITest {
         assertNull(pp2.getSignature());
         assertEquals("test2", pp2.getName());
         assertEquals("testdata2", pp2.getRawValue());
+    }
+
+    /**
+     * Test the correct deserialization by the {@link MojangAPI#getPlayerProfile(String)} method.
+     * This test will use valid data and expects a normal result.
+     * Also this will contain an empty textures property.
+     *
+     */
+    @Test public void testPlayerProfileResponseDeserialization4() {
+        // before
+        MockWebServer mockWebServer = new MockWebServer();
+        mockWebServer.enqueue(new MockResponse().setBody("{\"id\":\"ec561538f3fd461daff5086b22154bce\",\"name\":\"Alex\",\"properties\":[{\"name\":\"textures\",\"value\":\"eyJ0aW1lc3RhbXAiOjE1NTU0MzE5NzU1OTAsInByb2ZpbGVJZCI6ImVjNTYxNTM4ZjNmZDQ2MWRhZmY1MDg2YjIyMTU0YmNlIiwicHJvZmlsZU5hbWUiOiJBbGV4IiwidGV4dHVyZXMiOnt9fQ==\"}]}"));
+
+        MojangAPI classUnderTest = new MojangAPI();
+        classUnderTest.sessionAPIInterface = getRetrofit(mockWebServer).create(ApiInterface.class);
+
+        // execute
+        PlayerProfile pp = null;
+        try {
+            pp = classUnderTest.getPlayerProfile("ec561538f3fd461daff5086b22154bce");
+        } catch (ApiResponseException e) {
+            e.printStackTrace();
+        }
+
+        // expect
+        assertNotNull(pp);
+        assertEquals("ec561538f3fd461daff5086b22154bce", pp.getId());
+        assertEquals("Alex", pp.getName());
+        assertNotNull(pp.getProperties());
+        assertEquals(1, pp.getProperties().size());
+        assertNotNull(((PlayerTexturesProperty) pp.getProperties().get(0)).getTextures());
+        assertNull(((PlayerTexturesProperty) pp.getProperties().get(0)).getTextures().getSkin());
+        assertNull(((PlayerTexturesProperty) pp.getProperties().get(0)).getTextures().getCape());
     }
 
     /**
