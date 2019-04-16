@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * This is the response of the Mojang API containing a username and a timestamp,
  * describing when a player started using the name, for a given uuid.
- * Returned in a {@link java.util.List< UsernameItem >} by {@link de.saibotk.jmaw.MojangAPI#getUsernameHistory(String)}.
+ * Returned in a {@link java.util.List} by {@link de.saibotk.jmaw.MojangAPI#getUsernameHistory(String)}.
  *
  * @author saibotk
  * @since 1.0

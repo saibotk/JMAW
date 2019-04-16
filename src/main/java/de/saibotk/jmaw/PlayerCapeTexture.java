@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * This models the players cape texture, found in {@link PlayerTextures#getCAPE()}.
+ * This models the players cape texture, found in {@link PlayerTextures#getCape()}.
  *
  * @author saibotk
  * @since 1.0

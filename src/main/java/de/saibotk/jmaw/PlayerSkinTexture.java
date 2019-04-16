@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * This models the players skin texture object found in {@link PlayerTextures#getSKIN()}.
+ * This models the players skin texture object found in {@link PlayerTextures#getSkin()}.
  *
  * @author saibotk
  * @since 1.0

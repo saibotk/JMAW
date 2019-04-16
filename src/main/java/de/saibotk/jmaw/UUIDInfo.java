@@ -39,7 +39,7 @@ public class UUIDInfo {
     /**
      * Set if an account is a demo account.
      * This will not modify anything on the Mojang account / API.
-     * @param demo
+     * @param demo whether or not the account is a demo account.
      * @since 1.0
      */
     public void setDemo(boolean demo) {
@@ -58,7 +58,7 @@ public class UUIDInfo {
     /**
      * Set if an account is a legacy account.
      * This will not modify anything on the Mojang account / API.
-     * @param legacy
+     * @param legacy whether or not the account is a legacy account.
      * @since 1.0
      */
     public void setLegacy(boolean legacy) {

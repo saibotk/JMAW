@@ -135,7 +135,7 @@ public class MojangAPI {
      * This will query the Mojang API for a response about the username history for a player by his uuid.
      *
      * @param uuid the unique user id of the player.
-     * @return a {@link List<UsernameItem>} instance or <code>null</code> if the servers response is empty or
+     * @return a {@link List} instance or <code>null</code> if the servers response is empty or
      *         an error occurred while connecting.
      * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
      *                              incorrect or there is an internal server error.
@@ -149,7 +149,7 @@ public class MojangAPI {
      * This will query the Mojang API for a response about the username history for a player by his uuid.
      *
      * @param usernames list of usernames to query.
-     * @return a {@link List<UUIDInfo>} instance or <code>null</code> if the servers response is empty or
+     * @return a {@link List} instance or <code>null</code> if the servers response is empty or
      *         an error occurred while connecting.
      * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
      *                              incorrect or there is an internal server error.
@@ -258,7 +258,7 @@ public class MojangAPI {
     /**
      * This will query the Mojang API for a list of blocked servers.
      *
-     * @return {@link List<String>} list with all blocked servers hashes.
+     * @return {@link List} list with all blocked servers hashes.
      * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
      *                              incorrect or there is an internal server error.
      * @since 1.0
@@ -270,6 +270,7 @@ public class MojangAPI {
     /**
      * This will query the Mojang API for informations about the sales for specific products.
      *
+     * @param keys the metric keys to request the statistics for.
      * @return {@link SaleStatistics} instance.
      * @throws ApiResponseException This will occur when the API returns an error code and the user input might be
      *                              incorrect or there is an internal server error.
