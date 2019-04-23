@@ -32,7 +32,9 @@ class PlayerTexturesPropertyDeserializer implements JsonDeserializer<PlayerTextu
         pp.setName(gson.fromJson(jsonObj.get("name"), String.class));
         pp.setRawValue(valueRaw);
         pp.setSignature(gson.fromJson(jsonObj.get("signature"), String.class));
-        pp.setTextures(gson.fromJson(value.get("textures"), PlayerTextures.class));
+        JsonObject textureObj = value.get("textures").getAsJsonObject();
+        pp.setCape(gson.fromJson(textureObj.get("CAPE"), PlayerCapeTexture.class));
+        pp.setSkin(gson.fromJson(textureObj.get("SKIN"), PlayerSkinTexture.class));
         pp.setProfileId(gson.fromJson(value.get("profileId"), String.class));
         pp.setProfileName(gson.fromJson(value.get("profileName"), String.class));
         if (value.has("signatureRequired")) {

@@ -28,9 +28,50 @@ public class PlayerTexturesProperty extends PlayerProperty {
     @Expose
     private boolean signatureRequired;
 
-    @SerializedName("textures")
+    @SerializedName("SKIN")
     @Expose
-    private PlayerTextures textures;
+    private PlayerSkinTexture skin;
+
+    @SerializedName("CAPE")
+    @Expose
+    private PlayerCapeTexture cape;
+
+    /**
+     * Returns the skin texture object.
+     * @return an instance of {@link PlayerSkinTexture}.
+     * @since 1.0
+     */
+    public PlayerSkinTexture getSkin() {
+        return skin;
+    }
+
+    /**
+     * Sets the players skin object.
+     * This will not modify anything on the Mojang account / API.
+     * @param skin the skin texture.
+     * @since 1.0
+     */
+    public void setSkin(PlayerSkinTexture skin) {
+        this.skin = skin;
+    }
+
+    /**
+     * Returns the players cape texture.
+     * @return an instance of {@link PlayerCapeTexture}.
+     * @since 1.0
+     */
+    public PlayerCapeTexture getCape() {
+        return cape;
+    }
+
+    /**
+     * Sets the players skin texture.
+     * This will not modify anything on the Mojang account / API.
+     * @param cape the cape texture.
+     */
+    public void setCape(PlayerCapeTexture cape) {
+        this.cape = cape;
+    }
 
     /**
      * Returns the timestamp, when the response was answered.
@@ -106,25 +147,6 @@ public class PlayerTexturesProperty extends PlayerProperty {
      */
     public void setSignatureRequired(boolean signatureRequired) {
         this.signatureRequired = signatureRequired;
-    }
-
-    /**
-     * Returns the players textures.
-     * @return an instance of {@link PlayerTextures}.
-     * @since 1.0
-     */
-    public PlayerTextures getTextures() {
-        return textures;
-    }
-
-    /**
-     * Sets the players textures.
-     * This will not modify anything on the Mojang account / API.
-     * @param textures the players textures.
-     * @since 1.0
-     */
-    public void setTextures(PlayerTextures textures) {
-        this.textures = textures;
     }
 
 }
