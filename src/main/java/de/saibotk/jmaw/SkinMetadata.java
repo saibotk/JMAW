@@ -39,7 +39,7 @@ public class SkinMetadata {
      * @since 1.0
      */
     public SkinModel getModel() {
-        return model;
+        return model == null ? SkinModel.DEFAULT : model;
     }
 
     /**

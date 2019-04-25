@@ -3,6 +3,8 @@ package de.saibotk.jmaw;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Optional;
+
 /**
  * This models the response of the Mojang API when querying for a {@link PlayerProfile} and his {@link PlayerProperty}
  * list. If the player has a property called "textures" then it will be converted to an instance of this class.
@@ -41,8 +43,8 @@ public class PlayerTexturesProperty extends PlayerProperty {
      * @return an instance of {@link PlayerSkinTexture}.
      * @since 1.0
      */
-    public PlayerSkinTexture getSkin() {
-        return skin;
+    public Optional<PlayerSkinTexture> getSkin() {
+        return Optional.ofNullable(skin);
     }
 
     /**
@@ -60,8 +62,8 @@ public class PlayerTexturesProperty extends PlayerProperty {
      * @return an instance of {@link PlayerCapeTexture}.
      * @since 1.0
      */
-    public PlayerCapeTexture getCape() {
-        return cape;
+    public Optional<PlayerCapeTexture> getCape() {
+        return Optional.ofNullable(cape);
     }
 
     /**

@@ -3,6 +3,8 @@ package de.saibotk.jmaw;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Optional;
+
 /**
  * This is the response of the Mojang API containing a username and a timestamp,
  * describing when a player started using the name, for a given uuid.
@@ -41,12 +43,12 @@ public class UsernameItem {
     }
 
     /**
-     * Returns the timestamp, when the user started using the name.
+     * Returns the timestamp, when the user started using the name (in milliseconds).
      * @return the timestamp.
      * @since 1.0
      */
-    public Long getChangedToAt() {
-        return changedToAt;
+    public Optional<Long> getChangedToAt() {
+        return Optional.ofNullable(changedToAt);
     }
 
     /**

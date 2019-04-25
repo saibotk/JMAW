@@ -2,6 +2,7 @@ package de.saibotk.jmaw;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * This is the response of the Mojang API containing a status signal {@link MojangAPIStatusCode}
@@ -42,10 +43,10 @@ public class APIStatus {
     /**
      * Simple helper which calls {@link Map#getOrDefault(Object, Object)} on the internal services list.
      * @param serviceName the service.
-     * @return the status for the service or null if the service was not found.
+     * @return the status for the service or null if the service was not found. (Wrapped in {@link Optional})
      * @since 1.0
      */
-    public MojangAPIStatusCode get(String serviceName) {
-        return services.getOrDefault(serviceName, null);
+    public Optional<MojangAPIStatusCode> get(String serviceName) {
+        return Optional.ofNullable(services.getOrDefault(serviceName, null));
     }
 }

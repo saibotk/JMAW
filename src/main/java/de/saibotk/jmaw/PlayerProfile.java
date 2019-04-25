@@ -19,11 +19,34 @@ public class PlayerProfile {
 
     @SerializedName("name")
     @Expose
-    private String name;
+    private String username;
 
     @SerializedName("properties")
     @Expose
-    private List<PlayerProperty> properties = null;
+    private List<PlayerProperty> properties;
+
+    @SerializedName("legacy")
+    @Expose
+    private boolean legacy;
+
+    /**
+     * Returns if an account is a legacy account.
+     * @return true if it is and false if not.
+     * @since 1.0
+     */
+    public boolean isLegacy() {
+        return legacy;
+    }
+
+    /**
+     * Set if an account is a legacy account.
+     * This will not modify anything on the Mojang account / API.
+     * @param legacy whether or not the account is a legacy account.
+     * @since 1.0
+     */
+    public void setLegacy(boolean legacy) {
+        this.legacy = legacy;
+    }
 
     /**
      * Returns the players uuid.
@@ -49,18 +72,18 @@ public class PlayerProfile {
      * @return the username.
      * @since 1.0
      */
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
     /**
      * Sets the username.
      * This will not modify anything on the Mojang account / API.
-     * @param name the username.
+     * @param username the username.
      * @since 1.0
      */
-    void setName(String name) {
-        this.name = name;
+    void setUsername(String username) {
+        this.username = username;
     }
 
     /**

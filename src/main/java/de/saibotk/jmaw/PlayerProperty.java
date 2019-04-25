@@ -3,6 +3,8 @@ package de.saibotk.jmaw;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Optional;
+
 /**
  * This models the basic player property found in the list of all properties a player has
  * ({@link PlayerProfile#getProperties()}). Usually not returned by the Mojang API, only the "textures" property is
@@ -70,8 +72,8 @@ public class PlayerProperty {
      * @return the signature or <code>null</code> if not requested.
      * @since 1.0
      */
-    public String getSignature() {
-        return signature;
+    public Optional<String> getSignature() {
+        return Optional.ofNullable(signature);
     }
 
     /**

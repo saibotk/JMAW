@@ -3,6 +3,8 @@ package de.saibotk.jmaw;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Optional;
+
 /**
  * This models the players skin texture object found in {@link PlayerTexturesProperty#getSkin()}.
  *
@@ -45,8 +47,8 @@ public class PlayerSkinTexture {
      * @return an instance of {@link SkinMetadata} or null if the response did not include any information.
      * @since 1.0
      */
-    public SkinMetadata getMetadata() {
-        return metadata;
+    public Optional<SkinMetadata> getMetadata() {
+        return Optional.ofNullable(metadata);
     }
 
     /**
