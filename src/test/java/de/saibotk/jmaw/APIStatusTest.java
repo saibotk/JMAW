@@ -27,7 +27,7 @@ public class APIStatusTest extends APITest {
         // execute
         APIStatus mas = null;
         try {
-            mas = classUnderTest.getAPIStatus();
+            mas = classUnderTest.getAPIStatus().orElse(null);
         } catch (ApiResponseException e) {
             e.printStackTrace();
         }
@@ -53,7 +53,7 @@ public class APIStatusTest extends APITest {
         // execute
         APIStatus mas = null;
         try {
-            mas = classUnderTest.getAPIStatus();
+            mas = classUnderTest.getAPIStatus().orElse(null);
         } catch (ApiResponseException e) {
             e.printStackTrace();
         }
@@ -61,9 +61,9 @@ public class APIStatusTest extends APITest {
         // expect
         assertNotNull("getAPIStatus() should return an object.", mas);
         assertSame(3, mas.getServices().size());
-        assertEquals(APIStatus.MojangAPIStatusCode.YELLOW, mas.get("minecraft.net"));
-        assertEquals(APIStatus.MojangAPIStatusCode.RED, mas.get("session.minecraft.net"));
-        assertEquals(APIStatus.MojangAPIStatusCode.GREEN, mas.get("account.mojang.com"));
+        assertEquals(APIStatus.MojangAPIStatusCode.YELLOW, mas.get("minecraft.net").orElse(null));
+        assertEquals(APIStatus.MojangAPIStatusCode.RED, mas.get("session.minecraft.net").orElse(null));
+        assertEquals(APIStatus.MojangAPIStatusCode.GREEN, mas.get("account.mojang.com").orElse(null));
     }
 
 }

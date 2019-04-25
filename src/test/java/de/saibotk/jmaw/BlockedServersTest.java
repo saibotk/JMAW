@@ -81,7 +81,7 @@ public class BlockedServersTest extends APITest {
         // execute
         List<String> mas = null;
         try {
-            mas = classUnderTest.getBlockedServers();
+            mas = classUnderTest.getBlockedServers().orElse(null);
         } catch (ApiResponseException e) {
             e.printStackTrace();
         }

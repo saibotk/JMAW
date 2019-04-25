@@ -39,7 +39,7 @@ public class SaleStatisticsTest extends APITest {
         // execute
         SaleStatistics mas = null;
         try {
-            mas = classUnderTest.getSaleStatistics(metricKeys);
+            mas = classUnderTest.getSaleStatistics(metricKeys).orElse(null);
         } catch (ApiResponseException e) {
             e.printStackTrace();
         }
@@ -76,7 +76,7 @@ public class SaleStatisticsTest extends APITest {
         // execute
         SaleStatistics mas = null;
         try {
-            mas = classUnderTest.getSaleStatistics(metricKeys);
+            mas = classUnderTest.getSaleStatistics(metricKeys).orElse(null);
         } catch (ApiResponseException e) {
             e.printStackTrace();
         }

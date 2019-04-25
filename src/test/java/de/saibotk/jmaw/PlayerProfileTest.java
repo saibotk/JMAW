@@ -3,6 +3,9 @@ package de.saibotk.jmaw;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.Test;
+
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 
 /**
@@ -27,7 +30,7 @@ public class PlayerProfileTest extends APITest {
         // execute
         PlayerProfile pp = null;
         try {
-            pp = classUnderTest.getPlayerProfile("4566e69fc90748ee8d71d7ba5aa00d20");
+            pp = classUnderTest.getPlayerProfile("4566e69fc90748ee8d71d7ba5aa00d20").orElse(null);
         } catch (ApiResponseException e) {
             e.printStackTrace();
         }
@@ -35,17 +38,17 @@ public class PlayerProfileTest extends APITest {
         // expect
         assertNotNull(pp);
         assertEquals("4566e69fc90748ee8d71d7ba5aa00d20", pp.getId());
-        assertEquals("Thinkofdeath", pp.getName());
+        assertEquals("Thinkofdeath", pp.getUsername());
         assertNotNull(pp.getProperties());
         assertEquals(1, pp.getProperties().size());
         PlayerProperty textures = pp.getProperties().get(0);
         assertTrue(textures instanceof PlayerTexturesProperty);
         PlayerTexturesProperty ptp = (PlayerTexturesProperty) textures;
-        assertNull(ptp.getSignature());
-        assertNotNull(ptp.getSkin());
-        assertEquals("http://textures.minecraft.net/texture/74d1e08b0bb7e9f590af27758125bbed1778ac6cef729aedfcb9613e9911ae75", ptp.getSkin().getUrl());
-        assertNotNull(ptp.getCape());
-        assertEquals("http://textures.minecraft.net/texture/b0cc08840700447322d953a02b965f1d65a13a603bf64b17c803c21446fe1635", ptp.getCape().getUrl());
+        assertEquals(Optional.empty(), ptp.getSignature());
+        assertNotNull(ptp.getSkin().orElse(null));
+        assertEquals("http://textures.minecraft.net/texture/74d1e08b0bb7e9f590af27758125bbed1778ac6cef729aedfcb9613e9911ae75", ptp.getSkin().get().getUrl());
+        assertNotNull(ptp.getCape().orElse(null));
+        assertEquals("http://textures.minecraft.net/texture/b0cc08840700447322d953a02b965f1d65a13a603bf64b17c803c21446fe1635", ptp.getCape().get().getUrl());
         assertEquals((Long) 1554642133848L, ptp.getTimestamp());
         assertFalse(ptp.getSignatureRequired());
     }
@@ -67,7 +70,7 @@ public class PlayerProfileTest extends APITest {
         // execute
         PlayerProfile pp = null;
         try {
-            pp = classUnderTest.getPlayerProfile("c9b54008fd8047428b238787b5f2401c");
+            pp = classUnderTest.getPlayerProfile("c9b54008fd8047428b238787b5f2401c").orElse(null);
         } catch (ApiResponseException e) {
             e.printStackTrace();
         }
@@ -75,19 +78,19 @@ public class PlayerProfileTest extends APITest {
         // expect
         assertNotNull(pp);
         assertEquals("c9b54008fd8047428b238787b5f2401c", pp.getId());
-        assertEquals("MinecraftChick", pp.getName());
+        assertEquals("MinecraftChick", pp.getUsername());
         assertNotNull(pp.getProperties());
         assertEquals(1, pp.getProperties().size());
         PlayerProperty textures = pp.getProperties().get(0);
         assertTrue(textures instanceof PlayerTexturesProperty);
         PlayerTexturesProperty ptp = (PlayerTexturesProperty) textures;
-        assertNull(ptp.getSignature());
-        assertNotNull(ptp.getSkin());
-        assertEquals("http://textures.minecraft.net/texture/d82e0f0722b806895688284c3166585f7bb9bffc718e6f7f4bdcc73c2b23afe0", ptp.getSkin().getUrl());
-        assertNull(ptp.getCape());
+        assertEquals(Optional.empty(), ptp.getSignature());
+        assertNotNull(ptp.getSkin().orElse(null));
+        assertEquals("http://textures.minecraft.net/texture/d82e0f0722b806895688284c3166585f7bb9bffc718e6f7f4bdcc73c2b23afe0", ptp.getSkin().get().getUrl());
+        assertEquals(Optional.empty(), ptp.getCape());
         assertEquals((Long) 1555433820537L, ptp.getTimestamp());
-        assertNotNull(ptp.getSkin().getMetadata());
-        assertEquals(SkinMetadata.SkinModel.SLIM, ptp.getSkin().getMetadata().getModel());
+        assertNotNull(ptp.getSkin().get().getMetadata().orElse(null));
+        assertEquals(SkinMetadata.SkinModel.SLIM, ptp.getSkin().get().getMetadata().get().getModel());
         assertFalse(ptp.getSignatureRequired());
     }
 
@@ -108,7 +111,7 @@ public class PlayerProfileTest extends APITest {
         // execute
         PlayerProfile pp = null;
         try {
-            pp = classUnderTest.getPlayerProfile("4566e69fc90748ee8d71d7ba5aa00d20");
+            pp = classUnderTest.getPlayerProfile("4566e69fc90748ee8d71d7ba5aa00d20").orElse(null);
         } catch (ApiResponseException e) {
             e.printStackTrace();
         }
@@ -116,17 +119,17 @@ public class PlayerProfileTest extends APITest {
         // expect
         assertNotNull(pp);
         assertEquals("4566e69fc90748ee8d71d7ba5aa00d20", pp.getId());
-        assertEquals("Thinkofdeath", pp.getName());
+        assertEquals("Thinkofdeath", pp.getUsername());
         assertNotNull(pp.getProperties());
         assertEquals(2, pp.getProperties().size());
         PlayerProperty pp1 = pp.getProperties().get(0);
         assertFalse(pp1 instanceof PlayerTexturesProperty);
-        assertNull(pp1.getSignature());
+        assertEquals(Optional.empty(), pp1.getSignature());
         assertEquals("test1", pp1.getName());
         assertEquals("testdata1", pp1.getRawValue());
         PlayerProperty pp2 = pp.getProperties().get(1);
         assertFalse(pp2 instanceof PlayerTexturesProperty);
-        assertNull(pp2.getSignature());
+        assertEquals(Optional.empty(), pp2.getSignature());
         assertEquals("test2", pp2.getName());
         assertEquals("testdata2", pp2.getRawValue());
     }
@@ -148,7 +151,7 @@ public class PlayerProfileTest extends APITest {
         // execute
         PlayerProfile pp = null;
         try {
-            pp = classUnderTest.getPlayerProfile("ec561538f3fd461daff5086b22154bce");
+            pp = classUnderTest.getPlayerProfile("ec561538f3fd461daff5086b22154bce").orElse(null);
         } catch (ApiResponseException e) {
             e.printStackTrace();
         }
@@ -156,12 +159,12 @@ public class PlayerProfileTest extends APITest {
         // expect
         assertNotNull(pp);
         assertEquals("ec561538f3fd461daff5086b22154bce", pp.getId());
-        assertEquals("Alex", pp.getName());
+        assertEquals("Alex", pp.getUsername());
         assertNotNull(pp.getProperties());
         assertEquals(1, pp.getProperties().size());
         assertNotNull(pp.getProperties().get(0));
-        assertNull(((PlayerTexturesProperty) pp.getProperties().get(0)).getSkin());
-        assertNull(((PlayerTexturesProperty) pp.getProperties().get(0)).getCape());
+        assertEquals(Optional.empty(), ((PlayerTexturesProperty) pp.getProperties().get(0)).getSkin());
+        assertEquals(Optional.empty(), ((PlayerTexturesProperty) pp.getProperties().get(0)).getCape());
     }
 
     /**
@@ -179,7 +182,7 @@ public class PlayerProfileTest extends APITest {
         // execute
         PlayerProfile pp = null;
         try {
-            pp = classUnderTest.getPlayerProfile("4566e69fc90748ee8d71d7ba5aa00d20");
+            pp = classUnderTest.getPlayerProfile("4566e69fc90748ee8d71d7ba5aa00d20").orElse(null);
         } catch (ApiResponseException e) {
             e.printStackTrace();
         }

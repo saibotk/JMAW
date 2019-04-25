@@ -27,7 +27,7 @@ public class UUIDInfoTest extends APITest {
         // execute
         UUIDInfo info = null;
         try {
-            info = classUnderTest.getUUIDInfo("Notch");
+            info = classUnderTest.getUUIDInfo("Notch").orElse(null);
         } catch (ApiResponseException e) {
             e.printStackTrace();
         }
