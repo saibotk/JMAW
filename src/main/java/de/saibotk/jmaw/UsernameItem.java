@@ -36,7 +36,7 @@ public class UsernameItem {
      * @param name the username.
      * @since 1.0
      */
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -55,7 +55,7 @@ public class UsernameItem {
      * @param changedToAt the timestamp.
      * @since 1.0
      */
-    public void setChangedToAt(Long changedToAt) {
+    void setChangedToAt(Long changedToAt) {
         this.changedToAt = changedToAt;
     }
 

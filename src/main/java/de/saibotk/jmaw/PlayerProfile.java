@@ -40,7 +40,7 @@ public class PlayerProfile {
      * @param id the uuid.
      * @since 1.0
      */
-    public void setId(String id) {
+    void setId(String id) {
         this.id = id;
     }
 
@@ -59,7 +59,7 @@ public class PlayerProfile {
      * @param name the username.
      * @since 1.0
      */
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -78,7 +78,7 @@ public class PlayerProfile {
      * @param properties the list of properties for a player.
      * @since 1.0
      */
-    public void setProperties(List<PlayerProperty> properties) {
+    void setProperties(List<PlayerProperty> properties) {
         this.properties = properties;
     }
 

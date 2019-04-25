@@ -30,7 +30,7 @@ public class PlayerCapeTexture {
      * @param url the url.
      * @since 1.0
      */
-    public void setUrl(String url) {
+    void setUrl(String url) {
         this.url = url;
     }
 

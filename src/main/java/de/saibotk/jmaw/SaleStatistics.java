@@ -45,7 +45,7 @@ public class SaleStatistics {
      * @param total total amount.
      * @since 1.0
      */
-    public void setTotal(long total) {
+    void setTotal(long total) {
         this.total = total;
     }
 
@@ -64,7 +64,7 @@ public class SaleStatistics {
      * @param last24h the amount for the last 24 hours.
      * @since 1.0
      */
-    public void setLast24h(long last24h) {
+    void setLast24h(long last24h) {
         this.last24h = last24h;
     }
 
@@ -83,7 +83,7 @@ public class SaleStatistics {
      * @param saleVelocityPerSeconds the sale velocity / s.
      * @since 1.0
      */
-    public void setSaleVelocityPerSeconds(float saleVelocityPerSeconds) {
+    void setSaleVelocityPerSeconds(float saleVelocityPerSeconds) {
         this.saleVelocityPerSeconds = saleVelocityPerSeconds;
     }
 

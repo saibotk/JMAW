@@ -42,7 +42,7 @@ public class PlayerProperty {
      * @param name the name.
      * @since 1.0
      */
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -61,7 +61,7 @@ public class PlayerProperty {
      * @param value the encoded value.
      * @since 1.0
      */
-    public void setRawValue(String value) {
+    void setRawValue(String value) {
         this.rawValue = value;
     }
 
@@ -80,7 +80,7 @@ public class PlayerProperty {
      * @param signature the signature.
      * @since 1.0
      */
-    public void setSignature(String signature) {
+    void setSignature(String signature) {
         this.signature = signature;
     }
 

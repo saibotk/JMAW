@@ -34,7 +34,7 @@ public class PlayerSkinTexture {
      * @param url the skin's url.
      * @since 1.0
      */
-    public void setUrl(String url) {
+    void setUrl(String url) {
         this.url = url;
     }
 
@@ -55,7 +55,7 @@ public class PlayerSkinTexture {
      * @param metadata the metadata.
      * @since 1.0
      */
-    public void setMetadata(SkinMetadata metadata) {
+    void setMetadata(SkinMetadata metadata) {
         this.metadata = metadata;
     }
 }

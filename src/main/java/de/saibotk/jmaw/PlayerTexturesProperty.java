@@ -51,7 +51,7 @@ public class PlayerTexturesProperty extends PlayerProperty {
      * @param skin the skin texture.
      * @since 1.0
      */
-    public void setSkin(PlayerSkinTexture skin) {
+    void setSkin(PlayerSkinTexture skin) {
         this.skin = skin;
     }
 
@@ -69,7 +69,7 @@ public class PlayerTexturesProperty extends PlayerProperty {
      * This will not modify anything on the Mojang account / API.
      * @param cape the cape texture.
      */
-    public void setCape(PlayerCapeTexture cape) {
+    void setCape(PlayerCapeTexture cape) {
         this.cape = cape;
     }
 
@@ -88,7 +88,7 @@ public class PlayerTexturesProperty extends PlayerProperty {
      * @param timestamp the timestamp.
      * @since 1.0
      */
-    public void setTimestamp(Long timestamp) {
+    void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -107,7 +107,7 @@ public class PlayerTexturesProperty extends PlayerProperty {
      * @param profileId the uuid.
      * @since 1.0
      */
-    public void setProfileId(String profileId) {
+    void setProfileId(String profileId) {
         this.profileId = profileId;
     }
 
@@ -126,7 +126,7 @@ public class PlayerTexturesProperty extends PlayerProperty {
      * @param profileName the username.
      * @since 1.0
      */
-    public void setProfileName(String profileName) {
+    void setProfileName(String profileName) {
         this.profileName = profileName;
     }
 
@@ -145,7 +145,7 @@ public class PlayerTexturesProperty extends PlayerProperty {
      * @param signatureRequired was the signature requested?
      * @since 1.0
      */
-    public void setSignatureRequired(boolean signatureRequired) {
+    void setSignatureRequired(boolean signatureRequired) {
         this.signatureRequired = signatureRequired;
     }
 

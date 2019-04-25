@@ -12,6 +12,7 @@ import com.google.gson.annotations.SerializedName;
  * @since 1.0
  */
 public class SkinMetadata {
+
     public enum SkinModel {
         @SerializedName("") DEFAULT(""),
         @SerializedName("slim") SLIM ("slim");
@@ -47,7 +48,7 @@ public class SkinMetadata {
      * @param model the model that is used.
      * @since 1.0
      */
-    public void setModel(SkinModel model) {
+    void setModel(SkinModel model) {
         this.model = model;
     }
 }

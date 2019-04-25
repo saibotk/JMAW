@@ -35,7 +35,7 @@ public class APIStatus {
      * @param services the {@link Map} containing the services names and their corresponding status
      * @since 1.0
      */
-    public void setServices(Map<String, MojangAPIStatusCode> services) {
+    void setServices(Map<String, MojangAPIStatusCode> services) {
         this.services = services;
     }
 
