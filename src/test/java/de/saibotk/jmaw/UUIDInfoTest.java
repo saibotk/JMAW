@@ -3,7 +3,9 @@ package de.saibotk.jmaw;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Tests regarding the {@link UUIDInfo} returned by the {@link MojangAPI#getUUIDInfo(String, long)} method.

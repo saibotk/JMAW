@@ -206,4 +206,23 @@ public class PlayerProfileTest extends APITest {
         // execute
         classUnderTest.getPlayerProfile("4566e69fc90748ee8d71d7ba5aa00d20");
     }
+
+    @Test public void testPlayerProfileResponseTooMany() {
+        // before
+        MojangAPI classUnderTest = new MojangAPI();
+
+        // execute
+        PlayerProfile pp1 = null;
+        PlayerProfile pp2 = null;
+        try {
+            pp1 = classUnderTest.getPlayerProfile("4566e69fc90748ee8d71d7ba5aa00d20").orElse(null);
+            pp2 = classUnderTest.getPlayerProfile("4566e69fc90748ee8d71d7ba5aa00d20").orElse(null);
+        } catch (ApiResponseException e) {
+            assertTrue(e instanceof TooManyRequestsException);
+        }
+
+        assertNotNull(pp1);
+        assertNull(pp2);
+
+    }
 }

@@ -82,7 +82,11 @@ public class MojangAPI {
             if (response.isSuccessful()) {
                 return Optional.ofNullable(response.body());
             } else {
-                throw new ApiResponseException(response);
+                ApiResponseException ex = new ApiResponseException(response);
+                if (ex.getApiError().isPresent() && ex.getApiError().get().getError().equals("TooManyRequestsException")) {
+                    throw new TooManyRequestsException(response);
+                }
+                throw ex;
             }
         }
         return Optional.empty();

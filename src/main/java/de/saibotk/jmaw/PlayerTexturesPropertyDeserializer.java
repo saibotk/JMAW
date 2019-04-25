@@ -1,8 +1,9 @@
 package de.saibotk.jmaw;
 
 import com.google.gson.*;
-import java.util.Base64;
+
 import java.lang.reflect.Type;
+import java.util.Base64;
 
 /**
  * A TypeAdapter only implementing the {@link JsonDeserializer} interface since we will never send a

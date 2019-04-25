@@ -3,6 +3,7 @@ package de.saibotk.jmaw;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**

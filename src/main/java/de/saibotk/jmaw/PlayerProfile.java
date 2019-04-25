@@ -1,10 +1,10 @@
 package de.saibotk.jmaw;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * This models the response for the Mojang API when querying for information on a specific player via
