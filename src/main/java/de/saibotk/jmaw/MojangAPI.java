@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -25,7 +26,6 @@ import java.util.stream.Collectors;
  */
 @SuppressWarnings("WeakerAccess")
 public class MojangAPI {
-
 
     private static final Logger logger = Logger.getLogger(MojangAPI.class.getName());
 
@@ -68,7 +68,7 @@ public class MojangAPI {
         sessionAPILineReadInterface = retrofitLineReadSessionAPI.create(ApiInterface.class);
     }
 
-    private <T> T request(Call<T> callToExecute, String url) throws ApiResponseException {
+    private <T> Optional<T> request(Call<T> callToExecute, String url) throws ApiResponseException {
         Response<T> response = null;
 
         // try requesting data from the server
@@ -80,12 +80,12 @@ public class MojangAPI {
 
         if (response != null) {
             if (response.isSuccessful()) {
-                return response.body();
+                return Optional.ofNullable(response.body());
             } else {
                 throw new ApiResponseException(response);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -97,7 +97,7 @@ public class MojangAPI {
      *                              incorrect or there is an internal server error.
      * @since 1.0
      */
-    public APIStatus getAPIStatus() throws ApiResponseException {
+    public Optional<APIStatus> getAPIStatus() throws ApiResponseException {
         return request(statusAPIInterface.getApiStatus(), MOJANG_API_STATUS_URL);
     }
 
@@ -111,7 +111,7 @@ public class MojangAPI {
      *                              incorrect or there is an internal server error.
      * @since 1.0
      */
-    public UUIDInfo getUUIDInfo(String username) throws ApiResponseException {
+    public Optional<UUIDInfo> getUUIDInfo(String username) throws ApiResponseException {
         return request(mojangAPIInterface.getUUIDInfo(username), MOJANG_API_URL);
     }
 
@@ -127,7 +127,7 @@ public class MojangAPI {
      *                              incorrect or there is an internal server error.
      * @since 1.0
      */
-    public UUIDInfo getUUIDInfo(String username, long timestamp) throws ApiResponseException {
+    public Optional<UUIDInfo> getUUIDInfo(String username, long timestamp) throws ApiResponseException {
         return request(mojangAPIInterface.getUUIDInfo(username, timestamp), MOJANG_API_URL);
     }
 
@@ -141,12 +141,13 @@ public class MojangAPI {
      *                              incorrect or there is an internal server error.
      * @since 1.0
      */
-    public List<UsernameItem> getUsernameHistory(String uuid) throws ApiResponseException {
+    public Optional<List<UsernameItem>> getUsernameHistory(String uuid) throws ApiResponseException {
         return request(mojangAPIInterface.getUsernameHistory(uuid), MOJANG_API_URL);
     }
 
     /**
      * This will query the Mojang API for a response about the username history for a player by his uuid.
+     * The list might be empty or the item count may differ from the input count, since the API ignores wrong uuids.
      *
      * @param usernames list of usernames to query.
      * @return a {@link List} instance or <code>null</code> if the servers response is empty or
@@ -166,19 +167,17 @@ public class MojangAPI {
             List<String> usernamesToRequest = usernames.subList(MOJANG_API_USERNAMES_TO_UUIDS_MAX_REQUESTS * i, MOJANG_API_USERNAMES_TO_UUIDS_MAX_REQUESTS * i + Math.min(sizeToOperateOn, MOJANG_API_USERNAMES_TO_UUIDS_MAX_REQUESTS));
 
             // request data
-            List<UUIDInfo> response = request(mojangAPIInterface.getUsernamesToUUIDs(usernamesToRequest), MOJANG_API_URL);
+            Optional<List<UUIDInfo>> result = request(mojangAPIInterface.getUsernamesToUUIDs(usernamesToRequest), MOJANG_API_URL);
 
-            if (response != null && !response.isEmpty()) {
-                responseList.addAll(response);
-            }
+            result.ifPresent(responseList::addAll);
 
             sizeToOperateOn -= MOJANG_API_USERNAMES_TO_UUIDS_MAX_REQUESTS;
         }
 
-        return (!responseList.isEmpty()) ? responseList : null;
+        return responseList;
     }
 
-    /**L301/93;L115/1 Halle
+    /**
      * This will query the Mojang API for a response about the informations (eg. skin etc) of a specific player by his
      * uuid.
      * This response will be unsigned.
@@ -190,7 +189,7 @@ public class MojangAPI {
      *                              incorrect or there is an internal server error.
      * @since 1.0
      */
-    public PlayerProfile getPlayerProfile(String uuid) throws ApiResponseException {
+    public Optional<PlayerProfile> getPlayerProfile(String uuid) throws ApiResponseException {
         return request(sessionAPIInterface.getPlayerProfile(uuid, true), MOJANG_API_SESSION_URL);
     }
 
@@ -207,7 +206,7 @@ public class MojangAPI {
      *                              incorrect or there is an internal server error.
      * @since 1.0
      */
-    public PlayerProfile getPlayerProfile(String uuid, boolean signed) throws ApiResponseException {
+    public Optional<PlayerProfile> getPlayerProfile(String uuid, boolean signed) throws ApiResponseException {
         return request(sessionAPIInterface.getPlayerProfile(uuid, !signed), MOJANG_API_SESSION_URL);
     }
 
@@ -263,7 +262,7 @@ public class MojangAPI {
      *                              incorrect or there is an internal server error.
      * @since 1.0
      */
-    public List<String> getBlockedServers() throws ApiResponseException {
+    public Optional<List<String>> getBlockedServers() throws ApiResponseException {
         return request(sessionAPILineReadInterface.getBlockedServers(), MOJANG_API_SESSION_URL);
     }
 
@@ -276,7 +275,7 @@ public class MojangAPI {
      *                              incorrect or there is an internal server error.
      * @since 1.0
      */
-    public SaleStatistics getSaleStatistics(List<SaleStatistics.MetricKeys> keys) throws ApiResponseException {
+    public Optional<SaleStatistics> getSaleStatistics(List<SaleStatistics.MetricKeys> keys) throws ApiResponseException {
         List<String> distinctKeys = keys.stream().distinct().map(k -> k.name().toLowerCase()).collect(Collectors.toList());
         JsonObject metrics = new JsonObject();
         metrics.add("metricKeys", Util.getGson().toJsonTree(distinctKeys));
