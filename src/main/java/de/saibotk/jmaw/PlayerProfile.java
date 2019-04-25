@@ -1,6 +1,8 @@
 package de.saibotk.jmaw;
 
 import java.util.List;
+import java.util.Optional;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -103,6 +105,27 @@ public class PlayerProfile {
      */
     void setProperties(List<PlayerProperty> properties) {
         this.properties = properties;
+    }
+
+    /**
+     * This will find the specific property in the PlayerProfile.
+     *
+     * @param name the name of the property.
+     * @return the property (wrapped as {@link Optional}).
+     * @since 1.0
+     */
+    public Optional<PlayerProperty> getProperty(String name) {
+        return this.properties.stream().filter(x -> x.getName().equals(name)).findAny();
+    }
+
+    /**
+     * This will return the textures property, if available.
+     *
+     * @return the textures property (wrapped as {@link Optional}).
+     * @since 1.0
+     */
+    public Optional<PlayerTexturesProperty> getTexturesProperty() {
+        return getProperty("textures").map(x -> (PlayerTexturesProperty) x);
     }
 
 }
