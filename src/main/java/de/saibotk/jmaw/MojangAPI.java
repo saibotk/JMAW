@@ -30,7 +30,7 @@ public class MojangAPI {
     private static final Logger logger = Logger.getLogger(MojangAPI.class.getName());
 
     private static final String MESSAGE_ERROR_ON_CONNECT = "Failed to connect to ";
-    private static final int MOJANG_API_USERNAMES_TO_UUIDS_MAX_REQUESTS = 100;
+    private static final int MOJANG_API_USERNAMES_TO_UUIDS_MAX_REQUESTS = 10;
 
     private static final String MOJANG_API_STATUS_URL = "https://status.mojang.com";
     private static final String MOJANG_API_URL = "https://api.mojang.com";
