@@ -45,6 +45,11 @@ Can be found in **/docs** or available through Github pages here: https://saibot
 - [Retrofit](https://github.com/square/retrofit) for HTTP requests ( Apache - 2.0 )
 - [Gson](https://github.com/google/gson) for json deserialization ( Apache - 2.0 )
 
+## Projects using JMAW
+- [BlockMap](https://github.com/Minecraft-Technik-Wiki/BlockMap)
+
+I'd be happy if you would let me know when you are using the library in one of your projects.
+
 ## Contribute
 **Everybody is welcome to open an issue and / or create a PR to suggest changes.**
 

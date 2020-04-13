@@ -6,21 +6,23 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Utility class holding static functions to recreate commonly used instances etc.
+ * Utility class holding static functions to recreate commonly used instances of {@link Gson} etc.
  *
  * @author saibotk
  * @since 1.0
  */
-class Util {
+public class Util {
 
     private Util() { }
 
     /**
-     * Returns a {@link Gson} instance, prepared with the commonly used custom type adapters.
-     * @return an {@link Gson} instance.
+     * Returns a {@link Gson} instance, prepared with the required custom type adapters, to be used with the provided
+     * api models.
+     *
+     * @return a {@link Gson} instance.
      * @since 1.0
      */
-    static Gson getGson() {
+    public static Gson getGson() {
         RuntimeDefaultTypeAdapterFactory<PlayerProperty> playerPropertyAdapterFactory = RuntimeDefaultTypeAdapterFactory.of(PlayerProperty.class, "name", true);
         playerPropertyAdapterFactory.registerSubtype(PlayerTexturesProperty.class, "textures");
 
@@ -33,7 +35,8 @@ class Util {
 
     /**
      * Returns a {@link Retrofit.Builder} instance, prepared with all converter factories.
-     * @return an {@link Retrofit.Builder} instance.
+     *
+     * @return a {@link Retrofit.Builder} instance.
      * @since 1.0
      */
     static Retrofit.Builder getRetrofitBuilder() {
@@ -43,7 +46,8 @@ class Util {
 
     /**
      * Returns a {@link Retrofit.Builder} instance, prepared with the {@link de.saibotk.jmaw.StringLineListConverterFactory}.
-     * @return an {@link Retrofit.Builder} instance.
+     *
+     * @return a {@link Retrofit.Builder} instance.
      * @since 1.0
      */
     static Retrofit.Builder getStringLineRetrofitBuilder() {
